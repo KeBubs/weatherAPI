@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weather 🌦️ </title>
+</head>
+<body>
+    <div class="weatherContainer">
+        <h1 id="title">Today's Weather</h1>
+        <form id="form">
+            <input type="search" id="postcode" placeholder="Enter Postcode" value="">
+            <input type="button" id="submit" value="Refresh">
+        <script>
+            let userPostcodeField = document.getElementById("postcode");
+            let refreshButton = document.getElementById("submit");
+            refreshButton.addEventListener("click", async function (){
+                let userPostcode = "B261HL"
+                console.log(userPostcode);
+                let postcodeObj = await fetch(`http://api.getthedata.com/postcode/${userPostcode}`, 
+                {method: 'GET',
+                headers: { 'Origin': "http://127.0.0.1:5500"},
+                })
+                console.log(postcodeObj)
+            })
+            
+
+        </script>
+        </form>
+        <p id="location" class="weatherText">Location</p>
+        <div class="containers">
+            <div id="left-box">
+                <p id="temp0" class="weatherText">Yesterdays minimum and maximum temperatures were...</p>
+                <p id="weatherCode0" class="weatherText">Todays Weather Code Loading...</p>
+                <p id="sunrise0" class="weatherText">Yesterdays Sunrise Loading...</p>
+                <p id="sunset0" class="weatherText">Yesterdays Sunset Loading...</p>
+            </div>
+            <div id="centre-box">
+                <p id="temp1" class="weatherText">Current Temperature Loading...</p>
+                <p id="weatherCode1" class="weatherText">Weather Code Loading...</p>
+                <p id="sunrise1" class="weatherText">Todays Sunrise Loading...</p>
+                <p id="sunset1" class="weatherText">Todays Sunset Loading...</p>
+            </div>
+            <div id="right-box">
+                <p id="temp2" class="weatherText">Tomorrow's minimum and maximum temperatures will be...</p>
+                <p id="weatherCode2" class="weatherText">Tomorrow's Weather Code Loading...</p>
+                <p id="sunrise2" class="weatherText">Tomorrows Sunrise Loading...</p>
+                <p id="sunset2" class="weatherText">Tomorrows Sunset Loading</p>
+            </div>
+        </div>
+        
+        
+        <img id="weatherEmoji" src="" class="weatherText">
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
