@@ -17,33 +17,32 @@ let latitude = ""
 let longitude = ""
 
 // URL to retrieve weather information, using the latitude and longitude (above), which was returned from the Postcode API
-const userLocation = `"https://api.open-meteo.com/v1/forecast?${latitude}&${longitude}&hourly=temperature_2m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&timezone=auto&past_days=1&forecast_days=3"`
+// const userLocation = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&timezone=auto&past_days=1&forecast_days=3`
 
-// When the refresh button is clicked, the function "getPostcode" will run.
-// let userPostcodeField = document.getElementById("postcode");
-// let refreshButton = document.getElementById("submit");
-// refreshButton.addEventListener("click", getPostcode)
+const testURL = ""
+
+// When the refresh button is clicked, the function "changeText" will run.
+// Confirmed that the button responds when clicked
+let userPostcodeField = document.getElementById("postcode");
+let refreshButton = document.getElementById("submit");
+refreshButton.addEventListener("click", changeText)
 
 // Function to take postcode from search field and store into a variable
+// Confirmed that the latitude and logitiude is returned. 
 async function getPostcode(){
     // Where the users postcode will be stored -- userPostcodeField.value
-    let userPostcode = "B261HL"
+    let userPostcode = userPostcodeField.value
     // Log the userPostcode to check its captured correctly.
     console.log(userPostcode);
     // Fetch command to API to request Postcode information 
-    let postcodeObj = await fetch(`http://api.getthedata.com/postcode/${userPostcode}`, 
-    { method: 'GET',
-    headers: { 'Origin': "http://127.0.0.1:5500"},
-    })
-    // Log the retrieved information 
-    console.log(postcodeObj)
-    /*
+    let response = await fetch(`http://api.getthedata.com/postcode/${userPostcode}`)
+    let postcodeObj = await response.json()
+    
     // Parse the returned object and find the latitude and logitude.
     // Add the latitude and longitude to variables ready to use in the other API. 
-    latitude = postcodeObj.result.latitude;
-    longitude = postcodeObj.result.longitude;
-    console.log(latitude, longitude);
-    */
+    latitude = postcodeObj.data.latitude;
+    longitude = postcodeObj.data.longitude;
+    
 } 
 
 // GET request to return post code information, such as latitude and longitude
@@ -53,9 +52,10 @@ async function getPostcode(){
 // document.addEventListener("DOMContentLoaded", getWeatherInfo)
 
 async function getWeatherInfo(){
-    const response = await fetch(userLocation);
+    await getPostcode()
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&timezone=auto&past_days=1&forecast_days=3`)
     let data = await response.json();
-    // console.log(data)
+    
     database.dailyFigures.currentWeather = data.current_weather.temperature
     // console.log(database.currentWeather)
     for (i = 0; i < data.daily.temperature_2m_min.length; i++){
@@ -74,13 +74,11 @@ async function getWeatherInfo(){
         database.dailyFigures.weatherCode[i] = data.daily.weathercode[i]
     }
 
-    // console.log(database)
 }
 
 async function changeText() {
-    console.log(formData)
-    await getPostcode
     await getWeatherInfo()
+    // console.log(database)
     let location = document.getElementById("location")
 
     for (let i = 0; i < database.dailyFigures.weatherCode.length; i++){

@@ -12,21 +12,6 @@
         <form id="form">
             <input type="search" id="postcode" placeholder="Enter Postcode" value="">
             <input type="button" id="submit" value="Refresh">
-        <script>
-            let userPostcodeField = document.getElementById("postcode");
-            let refreshButton = document.getElementById("submit");
-            refreshButton.addEventListener("click", async function (){
-                let userPostcode = "B261HL"
-                console.log(userPostcode);
-                let postcodeObj = await fetch(`http://api.getthedata.com/postcode/${userPostcode}`, 
-                {method: 'GET',
-                headers: { 'Origin': "http://127.0.0.1:5500"},
-                })
-                console.log(postcodeObj)
-            })
-            
-
-        </script>
         </form>
         <p id="location" class="weatherText">Location</p>
         <div class="containers">
