@@ -73,21 +73,21 @@ body {
 }
 
 #left-box {
-    background: #C4AE78;
+    /*background: #C4AE78;*/
     text-align: center;
     border-style: solid;
     font-size: medium;
 }
 
 #centre-box{
-    background: #C4AE78;
+    /*background: #C4AE78;*/
     text-align: center;
     border-style: solid;
     font-size: x-large;
 }
 
 #right-box{
-    background: #C4AE78;
+    /*background: #C4AE78;*/
     text-align: center;
     border-style: solid;
     font-size: medium;

@@ -12,6 +12,16 @@ const database = {
     },
 }
 
+const weatherCodeImages = {
+    clearSky/*00-19*/: "images/clearSky00-19.png",
+    precipitation /*20-29, 50-59*/: "images/precipitation20-29.png",
+    slightSnow /*36-39*/: "images/snow36-39.png",
+    fog/*40-49*/: "images/fog40-49.png",
+    rain /*60-69*/: "images/rain60-69.png",
+    snow /*70-79*/:"images/snow70-79.png",
+    heavyShowers /*80-99*/: "images/heavyrain80-89.png"
+}
+
 // Will be used to store the Latitude and Longitude from the users entered postcode.
 let latitude = ""
 let longitude = ""
@@ -28,7 +38,7 @@ async function getPostcode(){
     // Where the users postcode will be stored -- userPostcodeField.value
     let userPostcode = userPostcodeField.value
     // Log the userPostcode to check its captured correctly.
-    console.log(userPostcode);
+    // console.log(userPostcode);
     // Fetch command to API to request Postcode information
     let response = await fetch(`http://api.getthedata.com/postcode/${userPostcode}`)
     let postcodeObj = await response.json()
@@ -47,6 +57,7 @@ async function getWeatherInfo(){
     await getPostcode()
     const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&timezone=auto&past_days=1&forecast_days=3`)
     let data = await response.json();
+    console.log(data)
     database.dailyFigures.currentWeather = data.current_weather.temperature
     // console.log(database.currentWeather)
     for (i = 0; i < data.daily.temperature_2m_min.length; i++){
@@ -68,10 +79,11 @@ async function getWeatherInfo(){
 }
 
 async function changeText() {
+    console.log(database)
     await getWeatherInfo()
-    // console.log(database)
+    console.log(database)
     let location = document.getElementById("location")
-
+    let body = document.body
     for (let i = 0; i < database.dailyFigures.weatherCode.length; i++){
         let weatherCode = document.getElementById(`weatherCode${[i]}`);
         let sunrise = document.getElementById(`sunrise${[i]}`);
@@ -79,7 +91,29 @@ async function changeText() {
         weatherCode.textContent = `Weather Code: ${database.dailyFigures.weatherCode[i]}`;
         sunrise.textContent = `Sunrise: ${database.dailyFigures.sunrise[i]}`;
         sunset.textContent = `Sunset: ${database.dailyFigures.sunset[i]}`;
+        
+        // ---- Needs to add correct image to background
+        let image = document.getElementById(`image`)
+        if (database.dailyFigures.weatherCode[1] >= "00" && database.dailyFigures.weatherCode[1] <= "19"){
+            body.style.backgroundImage = "url(/images/clearSky00-19.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "20" && database.dailyFigures.weatherCode[1] <= "29"){
+            body.style.backgroundImage = "url(/images/precipitation20-29.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "30" && database.dailyFigures.weatherCode[1] <= "39") {
+            body.style.backgroundImage = "url(/images/snow36-39.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "40" && database.dailyFigures.weatherCode[1] <= "49") {
+            body.style.backgroundImage = "url(/images/fog40-49.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "50" && database.dailyFigures.weatherCode[1] <= "59") {
+            body.style.backgroundImage = "url(/images/precipitation20-29.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "60" && database.dailyFigures.weatherCode[1] <= "69") {
+            body.style.backgroundImage = "url(/images/rain60-69.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "70" && database.dailyFigures.weatherCode[1] <= "79") {
+            body.style.backgroundImage = "url(/images/snow70-79.png)"
+        } else if (database.dailyFigures.weatherCode[1] >= "80" && database.dailyFigures.weatherCode[1] <= "89"){
+            body.style.backgroundImage = "url(/images/heavyrain80-89.png)"
+        }
+        
     }
+
     for (let i = 0; i < database.dailyFigures.minimum.length-1; i++){
         if (i == 1){
             // Select the centre div and assign to a variable
@@ -106,8 +140,6 @@ async function changeText() {
         }
     }
 }
-
-
 // Next - format the date and time and only show the time in each panel.
 
 // Then - Change styling to make the centre box larger than the left and right. Add text styling!
