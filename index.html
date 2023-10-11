@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Weather 🌦️ </title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Weather 🌦️</title>
+  </head>
+  <body>
     <div class="weatherContainer">
-        <h1 id="title">Today's Weather</h1>
-        <form id="form">
-            <input type="search" id="postcode" placeholder="Enter Postcode" value="">
-            <input type="button" id="submit" value="Refresh">
-        </form>
-        <p id="location" class="weatherText">Location</p>
-        <div class="containers">
-            <div id="left-box">
-                <p id="temp0" class="weatherText"></p>
-                <p id="weatherCode0" class="weatherText"></p>
-                <p id="sunrise0" class="weatherText"></p>
-                <p id="sunset0" class="weatherText"></p>
-                
-            </div>
-            <div id="centre-box">
-                <p id="temp1" class="weatherText"></p>
-                <p id="weatherCode1" class="weatherText">Please enter a postcode above.</p>
-                <p id="sunrise1" class="weatherText"></p>
-                <p id="sunset1" class="weatherText"></p>
-                
-            </div>
-            <div id="right-box">
-                <p id="temp2" class="weatherText"></p>
-                <p id="weatherCode2" class="weatherText"></p>
-                <p id="sunrise2" class="weatherText"></p>
-                <p id="sunset2" class="weatherText"></p>
-                
-            </div>
+      <h1 id="title">Today's Weather</h1>
+      <form id="form">
+        <input
+          type="search"
+          id="postcode"
+          placeholder="Enter Postcode"
+          value=""
+        />
+        <input type="button" id="submit" value="Refresh" />
+      </form>
+      <p id="location" class="weatherText">Location</p>
+      <div class="containers">
+        <div id="left-box">
+          <div id="yesterday">
+            <p id="temp0" class="weatherText"></p>
+            <p id="weatherCode0" class="weatherText"></p>
+            <p id="sunrise0" class="sunrise"></p>
+            <p id="sunset0" class="sunset"></p>
+          </div>
+          <div id="yesterdayImg">
+            <img id="image0" alt="" src="">
+          </div>
         </div>
-        
-        
-        <img id="weatherEmoji" src="" class="weatherText">
-
+        <div id="centre-box">
+          <div id="today">
+            <p id="temp1" class="weatherText"></p>
+            <p id="weatherCode1" class="weatherText">
+              Please enter a postcode above.
+            </p>
+            <p id="sunrise1" class="sunrise"></p>
+            <p id="sunset1" class="sunset"></p>
+          </div>
+          <div id="todayImg">
+            <img id="image1" alt="" src="">
+          </div>
+        </div>
+        <div id="right-box">
+          <div id="tomorrow">
+          <p id="temp2" class="weatherText"></p>
+          <p id="weatherCode2" class="weatherText"></p>
+          <p id="sunrise2" class="sunrise"></p>
+          <p id="sunset2" class="sunset"></p>
+        </div>
+        <div id="tomorrowImg">
+          <img id="image2" alt="" src="">
+        </div>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
